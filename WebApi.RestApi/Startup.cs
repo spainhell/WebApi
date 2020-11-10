@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WebApi.DataLayerEF;
+using WebApi.DataLayerEF.Database;
 using WebApi.DomainLayer.Repositories;
 
 namespace WebApi.RestApi
@@ -27,6 +29,8 @@ namespace WebApi.RestApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<DataContext>(options 
+                => options.UseSqlServer(Configuration.GetConnectionString("DataContext"), x => x.MigrationsAssembly("WebApi.DataLayerEF")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
