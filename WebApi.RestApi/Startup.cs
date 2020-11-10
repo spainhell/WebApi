@@ -10,9 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebApi.BusinessLayer.Services;
 using WebApi.DataLayerEF;
 using WebApi.DataLayerEF.Database;
 using WebApi.DomainLayer.Repositories;
+using WebApi.DomainLayer.Services;
 
 namespace WebApi.RestApi
 {
@@ -32,6 +34,7 @@ namespace WebApi.RestApi
             services.AddDbContext<DataContext>(options 
                 => options.UseSqlServer(Configuration.GetConnectionString("DataContext"), x => x.MigrationsAssembly("WebApi.DataLayerEF")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IProductService, ProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
