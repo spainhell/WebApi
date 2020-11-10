@@ -12,7 +12,7 @@ namespace WebApi.DomainLayer.Repositories
         ValueTask<TEntity> GetByIdAsync(int id);
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
         Task InsertAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        void DeleteAsync(TEntity entity);
+        void Update(TEntity entity);
+        void Delete(TEntity entity);
     }
 }

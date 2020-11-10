@@ -8,6 +8,6 @@ namespace WebApi.DomainLayer.Repositories
 {
     public interface IProductRepository : IRepository<Product>
     {
-        Task UpdateDescriptionAsync(Product product);
+        void UpdateDescription(Product product, string description);
     }
 }
