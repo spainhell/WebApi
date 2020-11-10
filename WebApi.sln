@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.DataLayerEF", "WebAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.DomainLayer", "WebApi.DomainLayer\WebApi.DomainLayer.csproj", "{9B4B6FC3-EED0-40DB-9916-58268F8F25D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.RestApi", "WebApi.RestApi\WebApi.RestApi.csproj", "{3AB74F7A-6CAE-4137-A870-03BF37E2430A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9B4B6FC3-EED0-40DB-9916-58268F8F25D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B4B6FC3-EED0-40DB-9916-58268F8F25D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B4B6FC3-EED0-40DB-9916-58268F8F25D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AB74F7A-6CAE-4137-A870-03BF37E2430A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB74F7A-6CAE-4137-A870-03BF37E2430A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB74F7A-6CAE-4137-A870-03BF37E2430A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB74F7A-6CAE-4137-A870-03BF37E2430A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
