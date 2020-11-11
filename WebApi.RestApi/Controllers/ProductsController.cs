@@ -3,45 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using WebApi.DomainLayer.Model;
+using WebApi.DomainLayer.Services;
+using WebApi.RestApi.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApi.RestApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        // GET: api/<ProductsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly ILogger<ProductsController> _logger;
+        private readonly IProductService _productService;
+
+        public ProductsController(ILogger<ProductsController> logger, IProductService productService)
         {
-            return new string[] { "value1", "value2" };
+            _logger = logger;
+            _productService = productService;
         }
 
-        // GET api/<ProductsController>/5
+        [HttpGet("")]
+        [Produces("application/json")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
+        {
+            _logger?.LogDebug($"Method '{nameof(GetAllProducts)}' called.");
+            var products = await _productService.GetAllProducts();
+            _logger?.LogInformation($"Method '{nameof(GetAllProducts)}' successfully done.");
+            return Ok(products);
+        }
+
         [HttpGet("{id}")]
-        public string Get(int id)
+        [Produces("application/json")]
+        public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            return "value";
+            _logger?.LogDebug($"Method '{nameof(GetProduct)}' ID: {id} called.");
+            var product = await _productService.GetProductById(id);
+            _logger?.LogInformation($"Method '{nameof(GetProduct)}' ID: {id} successfully done.");
+            return Ok(product);
         }
 
-        // POST api/<ProductsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPut("{id}/description")]
+        public async Task<IActionResult> UpdateProductDescription(int id, [FromBody] ProductDescription productDescription)
         {
-        }
-
-        // PUT api/<ProductsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ProductsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            _logger?.LogDebug($"Method '{nameof(UpdateProductDescription)}' ID: {id}, new description: '{productDescription.Description}' called.");
+            if (id < 0) return BadRequest("Bad ID");
+            var productToUpdate = await _productService.GetProductById(id);
+            if (productToUpdate == null) return NotFound();
+            await _productService.UpdateDescription(productToUpdate, productDescription.Description);
+            _logger?.LogInformation($"Method '{nameof(UpdateProductDescription)}' ID: {id} successfully done.");
+            return NoContent();
         }
     }
 }

@@ -9,7 +9,7 @@ using WebApi.DataLayerEF.Database;
 namespace WebApi.DataLayerEF.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201110153437_InitialModel")]
+    [Migration("20201111074209_InitialModel")]
     partial class InitialModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
