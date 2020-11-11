@@ -31,6 +31,7 @@ namespace WebApi.RestApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddVersioning();
             services.AddDbContext<DataContext>(options 
                 => options.UseSqlServer(Configuration.GetConnectionString("DataContext"), x => x.MigrationsAssembly("WebApi.DataLayerEF")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();

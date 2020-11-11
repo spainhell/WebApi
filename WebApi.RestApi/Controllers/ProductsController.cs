@@ -13,7 +13,9 @@ using WebApi.RestApi.DTO;
 
 namespace WebApi.RestApi.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -32,6 +34,7 @@ namespace WebApi.RestApi.Controllers
         /// </summary>
         /// <returns>A response with products list</returns>
         [HttpGet("")]
+        [MapToApiVersion("1.0")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
@@ -59,6 +62,7 @@ namespace WebApi.RestApi.Controllers
         /// <response code="404">Product not found</response> 
         /// <returns>A response with a product</returns>
         [HttpGet("{id}")]
+        [MapToApiVersion("1.0")]
         [Produces("application/json")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -96,6 +100,7 @@ namespace WebApi.RestApi.Controllers
         /// <response code="404">Product not found</response>
         /// <returns>N/A</returns>
         [HttpPut("{id}/description")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateProductDescription(int id, [FromBody] ProductDescription productDescription)
         {
             _logger?.LogDebug($"Method '{nameof(UpdateProductDescription)}' ID: {id}, new description: '{productDescription.Description}' called.");
@@ -114,5 +119,34 @@ namespace WebApi.RestApi.Controllers
                 throw;
             }
         }
+
+
+        /* ********** API V2 ********** */
+        /*
+        // GET: api/v2/Products
+        /// <summary>
+        /// Returns all products list
+        /// </summary>
+        /// <returns>A response with products list</returns>
+        [HttpGet("")]
+        [MapToApiVersion("2.0")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsV2()
+        {
+            _logger?.LogDebug($"Method '{nameof(GetAllProductsV2)}' called.");
+            try
+            {
+                //var products = await _productService.GetAllProducts();
+                _logger?.LogInformation($"Method '{nameof(GetAllProductsV2)}' successfully done.");
+                return Ok("V2");
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogCritical($"Method '{nameof(GetAllProductsV2)}' error: {ex.Message}.");
+                throw;
+            }
+        }
+        */
     }
 }

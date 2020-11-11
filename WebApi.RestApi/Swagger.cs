@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace WebApi.RestApi
 {
@@ -13,9 +15,9 @@ namespace WebApi.RestApi
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                c.SwaggerDoc("v1.0", new OpenApiInfo
                 {
-                    Version = "v1",
+                    Version = "v1.0",
                     Title = "WebApi",
                     Description = "An ASP.NET Core Web API",
                     TermsOfService = new Uri("https://example.com/terms"),
@@ -31,6 +33,13 @@ namespace WebApi.RestApi
                         Url = new Uri("https://example.com/license"),
                     }
                 });
+                c.SwaggerDoc("v2.0", new OpenApiInfo
+                {
+                    Version = "v2.0",
+                    Title = "new generation Web API"
+                });
+                //c.OperationFilter<RemoveVersionParameterFilter>();
+                //c.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -45,9 +54,32 @@ namespace WebApi.RestApi
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.RoutePrefix = "";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Product WebAPI V1");
+                //c.RoutePrefix = "";
+                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Product WebAPI V1");
+                c.SwaggerEndpoint("/swagger/v2.0/swagger.json", "Product WebAPI V2");
             });
+        }
+    }
+
+    public class RemoveVersionParameterFilter : IOperationFilter
+    {
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            var versionParameter = operation.Parameters.Single(p => p.Name == "version");
+            operation.Parameters.Remove(versionParameter);
+        }
+    }
+
+    public class ReplaceVersionWithExactValueInPathFilter : IDocumentFilter
+    {
+        public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
+        {
+            var paths = new OpenApiPaths();
+            foreach (var path in swaggerDoc.Paths)
+            {
+                paths.Add(path.Key.Replace("v{version}", swaggerDoc.Info.Version), path.Value);
+            }
+            swaggerDoc.Paths = paths;
         }
     }
 }
