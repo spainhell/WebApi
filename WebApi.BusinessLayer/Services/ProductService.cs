@@ -45,6 +45,7 @@ namespace WebApi.BusinessLayer.Services
 
         public async Task UpdateDescription(Product product, string description)
         {
+            if (product.Description == description) return;
             _unitOfWork.Products.UpdateDescription(product, description);
             await _unitOfWork.CommitAsync();
         }

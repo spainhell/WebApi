@@ -35,6 +35,7 @@ namespace WebApi.RestApi
                 => options.UseSqlServer(Configuration.GetConnectionString("DataContext"), x => x.MigrationsAssembly("WebApi.DataLayerEF")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +45,8 @@ namespace WebApi.RestApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCustomSwagger();
 
             app.UseRouting();
 

@@ -39,6 +39,7 @@ namespace WebApi.RestApi.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
+            if (id < 0) return BadRequest("Bad ID");
             _logger?.LogDebug($"Method '{nameof(GetProduct)}' ID: {id} called.");
             var product = await _productService.GetProductById(id);
             _logger?.LogInformation($"Method '{nameof(GetProduct)}' ID: {id} successfully done.");
