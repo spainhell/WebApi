@@ -9,6 +9,7 @@ namespace WebApi.DomainLayer.Repositories
     public interface IRepository<TEntity> where TEntity : class
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<IEnumerable<TEntity>> GetAllPageAsync(int pageNumber, int pageSize);
         ValueTask<TEntity> GetByIdAsync(int id);
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
         Task InsertAsync(TEntity entity);

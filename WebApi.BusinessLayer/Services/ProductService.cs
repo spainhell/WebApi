@@ -21,6 +21,11 @@ namespace WebApi.BusinessLayer.Services
             return await _unitOfWork.Products.GetAllAsync();
         }
 
+        public async Task<IEnumerable<Product>> GetAllProductsPage(int pageNumber, int pageSize)
+        {
+            return await _unitOfWork.Products.GetAllPageAsync(pageNumber, pageSize);
+        }
+
         public async Task<Product> GetProductById(int id)
         {
             return await _unitOfWork.Products.GetByIdAsync(id);

@@ -33,8 +33,7 @@ namespace WebApi.RestApi.Controllers
         /// Returns all products list
         /// </summary>
         /// <returns>A response with products list</returns>
-        [HttpGet("")]
-        [MapToApiVersion("1.0")]
+        [HttpGet(""), MapToApiVersion("1.0")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
@@ -61,8 +60,7 @@ namespace WebApi.RestApi.Controllers
         /// <response code="200">Return a product</response>
         /// <response code="404">Product not found</response> 
         /// <returns>A response with a product</returns>
-        [HttpGet("{id}")]
-        [MapToApiVersion("1.0")]
+        [HttpGet("{id}"), MapToApiVersion("1.0")]
         [Produces("application/json")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -99,8 +97,7 @@ namespace WebApi.RestApi.Controllers
         /// <response code="204">Product description was successfully updated</response>
         /// <response code="404">Product not found</response>
         /// <returns>N/A</returns>
-        [HttpPut("{id}/description")]
-        [MapToApiVersion("1.0")]
+        [HttpPut("{id}/description"), MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateProductDescription(int id, [FromBody] ProductDescription productDescription)
         {
             _logger?.LogDebug($"Method '{nameof(UpdateProductDescription)}' ID: {id}, new description: '{productDescription.Description}' called.");
@@ -122,24 +119,32 @@ namespace WebApi.RestApi.Controllers
 
 
         /* ********** API V2 ********** */
-        /*
+        // /*
         // GET: api/v2/Products
         /// <summary>
         /// Returns all products list
         /// </summary>
+        /// <param name="pageNumber">Requested page number</param>
+        /// <param name="pageSize">Requested page size</param>
+        /// <response code="200">Return selected products</response>
+        /// <response code="404">Invalid query parameters</response>
         /// <returns>A response with products list</returns>
         [HttpGet("")]
         [MapToApiVersion("2.0")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsV2()
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsV2(int? pageNumber, int? pageSize)
         {
-            _logger?.LogDebug($"Method '{nameof(GetAllProductsV2)}' called.");
+            _logger?.LogDebug($"Method '{nameof(GetAllProductsV2)}' called. PageNumber {pageNumber} / PageSize {pageSize}.");
+            if (pageNumber == null || pageSize == null) return (BadRequest("pageNumber or pageSize missing"));
+            if (pageNumber.Value < 1 || pageSize.Value < 1) return (BadRequest("pageNumber or pageSize less than 1"));
             try
             {
-                //var products = await _productService.GetAllProducts();
+                List<Product> products = (await _productService.GetAllProductsPage(pageNumber.Value, pageSize.Value)).ToList();
+                var itemsCount = products.Count();
                 _logger?.LogInformation($"Method '{nameof(GetAllProductsV2)}' successfully done.");
-                return Ok("V2");
+                return Ok(new PagedResponse<Product>(pageNumber.Value, pageSize.Value, itemsCount, products));
             }
             catch (Exception ex)
             {
@@ -147,6 +152,6 @@ namespace WebApi.RestApi.Controllers
                 throw;
             }
         }
-        */
+        // */
     }
 }

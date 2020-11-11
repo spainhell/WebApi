@@ -23,6 +23,11 @@ namespace WebApi.DataLayerEF.Repositories
             return await Context.Set<TEntity>().ToListAsync();
         }
 
+        public async Task<IEnumerable<TEntity>> GetAllPageAsync(int pageNumber, int pageSize)
+        {
+            return await Context.Set<TEntity>().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        }
+
         public ValueTask<TEntity> GetByIdAsync(int id)
         {
             return Context.Set<TEntity>().FindAsync(id);

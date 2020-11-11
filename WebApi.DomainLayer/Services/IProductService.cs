@@ -9,6 +9,7 @@ namespace WebApi.DomainLayer.Services
     public interface IProductService
     {
         Task<IEnumerable<Product>> GetAllProducts();
+        Task<IEnumerable<Product>> GetAllProductsPage(int pageNumber = 1, int pageSize = 10);
         Task<Product> GetProductById(int id);
         Task<Product> InsertProduct(Product newProduct);
         Task UpdateProduct(Product originalProduct, Product newProduct);
