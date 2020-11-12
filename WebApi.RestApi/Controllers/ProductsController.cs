@@ -36,8 +36,9 @@ namespace WebApi.RestApi.Controllers
         /// <returns>A response with products list</returns>
         [HttpGet(""), MapToApiVersion("1.0")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAllProducts()
         {
             _logger?.LogDebug($"Method '{nameof(GetAllProducts)}' called.");
             try
@@ -63,13 +64,16 @@ namespace WebApi.RestApi.Controllers
         /// <returns>A response with a product</returns>
         [HttpGet("{id}"), MapToApiVersion("1.0")]
         [Produces("application/json")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetProduct(int id)
         {
             if (id < 0) return BadRequest("Bad ID");
             _logger?.LogDebug($"Method '{nameof(GetProduct)}' ID: {id} called.");
             try
             {
                 var product = await _productService.GetProductById(id);
+                if (product == null) return NotFound();
                 _logger?.LogInformation($"Method '{nameof(GetProduct)}' ID: {id} successfully done.");
                 return Ok(product);
             }
@@ -99,6 +103,8 @@ namespace WebApi.RestApi.Controllers
         /// <response code="404">Product not found</response>
         /// <returns>N/A</returns>
         [HttpPut("{id}/description"), MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateProductDescription(int id, [FromBody] ProductDescription productDescription)
         {
             _logger?.LogDebug($"Method '{nameof(UpdateProductDescription)}' ID: {id}, new description: '{productDescription.Description}' called.");
@@ -120,7 +126,7 @@ namespace WebApi.RestApi.Controllers
 
 
         /* ********** API V2 ********** */
-        // /*
+        /*
         // GET: api/v2/Products?pageNumber=1&pageSize=10
         /// <summary>
         /// Returns all products list
@@ -139,9 +145,9 @@ namespace WebApi.RestApi.Controllers
         [HttpGet("all")]
         [MapToApiVersion("2.0")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PagedResponse<Product>>> GetAllProductsV2([FromQuery][Required] int pageNumber, [FromQuery][Required] int pageSize)
+        public async Task<IActionResult> GetAllProductsV2([FromQuery][Required] int pageNumber, [FromQuery][Required] int pageSize)
         {
             _logger?.LogDebug($"Method '{nameof(GetAllProductsV2)}' called. PageNumber {pageNumber} / PageSize {pageSize}.");
             if (pageNumber < 1 || pageSize < 1) return (BadRequest("pageNumber or pageSize less than 1"));
@@ -158,6 +164,6 @@ namespace WebApi.RestApi.Controllers
                 throw;
             }
         }
-        // */
+        */
     }
 }

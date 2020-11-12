@@ -25,6 +25,15 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "WebApi.RestApi Prod": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/v1/products",
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
     }
   }
 }
