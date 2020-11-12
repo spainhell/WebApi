@@ -12,7 +12,7 @@
 ## Swagger
 -dostupný na '/swagger'  
 Nepodařilo se mi jej zprovoznit, pokud je k dispozici další [HttpGet("")] metoda ve stejném controlleru, využívající jinou verzi API.  
-Z tohoto důvodu je metoda 'GetAllProductsV2([FromQuery][Required] int pageNumber, [FromQuery][Required] int pageSize)' vystavena na url '/api/v2/products/page'.  
+Z tohoto důvodu je metoda 'GetAllProductsV2(...)' vystavena na url '/api/v2/products/page'.  
 Swagger negeneruje správně dokumentaci pro jednotlivé verze (v1 a v2).
 
 ## testování
