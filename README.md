@@ -28,7 +28,7 @@ Aktualizaci popisu produktu by bylo vhodné omezit jen povoleným uživatelům (
 ## spuštění
 spuštění verze s testovací databází v souboru:  
 *dotnet run --project WebApi.RestApi/WebApi.RestApi.csproj --launch-profile "WebApi.RestApi"*  
-spuštění verze s produkční databází:
+spuštění verze s produkční databází:  
 *dotnet run --project WebApi.RestApi/WebApi.RestApi.csproj --launch-profile "WebApi.RestApi Prod"*
-spuštění testů:
+spuštění testů:  
 *dotnet test* (v adresáři projektu WebApi.UnitTests)
