@@ -11,8 +11,9 @@
 
 ## Swagger
 -dostupný na '/swagger'  
-Nepodařilo se jej zprovoznit, pokud je k dispozici další HttpGet metoda ve stejném controlleru, využívající jinou verzi API.  
-Pokud se metoda 'GetAllProductsV2([FromQuery][Required] int pageNumber, [FromQuery][Required] int pageSize)' zakomentuje, Swagger funguje korektně.
+Nepodařilo se mi jej zprovoznit, pokud je k dispozici další [HttpGet("")] metoda ve stejném controlleru, využívající jinou verzi API.  
+Z tohoto důvodu je metoda 'GetAllProductsV2([FromQuery][Required] int pageNumber, [FromQuery][Required] int pageSize)' vystavena na url '/api/v2/products/page'.  
+Swagger negeneruje správně dokumentaci pro jednotlivé verze (v1 a v2).
 
 ## testování
 V projektu WebApi.UnitTests je pár testů na controller.  
