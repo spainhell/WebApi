@@ -126,28 +126,28 @@ namespace WebApi.RestApi.Controllers
 
 
         /* ********** API V2 ********** */
-        /*
-        // GET: api/v2/Products?pageNumber=1&pageSize=10
+        
+        // GET: api/v2/Products/paged?pageNumber=1&pageSize=10
         /// <summary>
-        /// Returns all products list
+        /// Returns products page
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
-        ///     GET api/v2/products?pageNumber=1&pageSize=10
+        ///     GET api/v2/products/paged?pageNumber=1&pageSize=10
         ///
         /// </remarks>
         /// <param name="pageNumber">Requested page number</param>
-        /// <param name="pageSize">Requested page size</param>
+        /// <param name="pageSize">Requested page size. Default value is 10.</param>
         /// <response code="200">Return selected products</response>
         /// <response code="404">Invalid query parameters</response>
-        /// <returns>A response with products list</returns>
-        [HttpGet("all")]
+        /// <returns>A response with products page</returns>
+        [HttpGet("paged")]
         [MapToApiVersion("2.0")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAllProductsV2([FromQuery][Required] int pageNumber, [FromQuery][Required] int pageSize)
+        public async Task<IActionResult> GetAllProductsV2([FromQuery][Required] int pageNumber, [FromQuery]int pageSize = 10)
         {
             _logger?.LogDebug($"Method '{nameof(GetAllProductsV2)}' called. PageNumber {pageNumber} / PageSize {pageSize}.");
             if (pageNumber < 1 || pageSize < 1) return (BadRequest("pageNumber or pageSize less than 1"));
@@ -164,6 +164,5 @@ namespace WebApi.RestApi.Controllers
                 throw;
             }
         }
-        */
     }
 }
