@@ -17,7 +17,7 @@ Swagger negeneruje správně dokumentaci pro jednotlivé verze (v1 a v2).
 
 ## testování
 V projektu WebApi.UnitTests je pár testů na controller.  
-Bylo by dobré dopsat i testy, využívající volání přes HTTP/HTTPS, aby byl ověřen také "prostup" požadavku ke kontrolleru např. přes middleware, zpracování verze atp.  
+Bylo by vhodné dopsat i testy, využívající volání přes HTTP/HTTPS, aby byl ověřen také "prostup" požadavku ke controlleru přes registrované middleware.  
 
 ## popis řešení
 Systém je rozdělen do 4 projektů + 1 testovací projekt.  
