@@ -1,7 +1,7 @@
 ### Rest API
-využívá LTS verzi .NET Core 3.1  
-využívá Entity Framework  
-využívá Swashbuckle Swagger / Open API
+- využívá LTS verzi .NET Core 3.1  
+- využívá Entity Framework  
+- využívá Swashbuckle Swagger / Open API
 
 ## příprava databáze před 1. spuštěním:
 *dotnet ef --startup-project WebApi.RestApi/WebApi.RestApi.csproj migrations remove -p WebApi.DataLayerEF/WebApi.DataLayerEF.csproj*  
@@ -10,13 +10,13 @@ využívá Swashbuckle Swagger / Open API
 *dotnet ef --startup-project WebApi.RestApi/WebApi.RestApi.csproj migrations remove -p WebApi.DataLayerEF/WebApi.DataLayerEF.csproj*  
 
 ## Swagger
-dostupný na '/swagger'  
-nepodařilo se jej zprovoznit, pokud je k dispozici další HttpGet metoda ve stejném controlleru, využívající jinou verzi API  
-pokud se metoda 'GetAllProductsV2([FromQuery][Required] int pageNumber, [FromQuery][Required] int pageSize)' zakomentuje, Swagger funguje korektně
+-dostupný na '/swagger'  
+Nepodařilo se jej zprovoznit, pokud je k dispozici další HttpGet metoda ve stejném controlleru, využívající jinou verzi API.  
+Pokud se metoda 'GetAllProductsV2([FromQuery][Required] int pageNumber, [FromQuery][Required] int pageSize)' zakomentuje, Swagger funguje korektně.
 
 ## testování
-v projektu WebApi.UnitTests je pár testů na controller  
-bylo by dobré dopsat i testy, využívající volání přes HTTP/HTTPS, aby byl ověřen také "prostup" požadavku ke kontrolleru např. přes middleware, zpracování verze atp.  
+V projektu WebApi.UnitTests je pár testů na controller.  
+Bylo by dobré dopsat i testy, využívající volání přes HTTP/HTTPS, aby byl ověřen také "prostup" požadavku ke kontrolleru např. přes middleware, zpracování verze atp.  
 
 ## popis řešení
 Systém je rozdělen do 4 projektů + 1 testovací projekt.  
