@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -120,31 +121,36 @@ namespace WebApi.RestApi.Controllers
 
         /* ********** API V2 ********** */
         // /*
-        // GET: api/v2/Products
+        // GET: api/v2/Products?pageNumber=1&pageSize=10
         /// <summary>
         /// Returns all products list
         /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/v2/products?pageNumber=1&pageSize=10
+        ///
+        /// </remarks>
         /// <param name="pageNumber">Requested page number</param>
         /// <param name="pageSize">Requested page size</param>
         /// <response code="200">Return selected products</response>
         /// <response code="404">Invalid query parameters</response>
         /// <returns>A response with products list</returns>
-        [HttpGet("")]
+        [HttpGet("all")]
         [MapToApiVersion("2.0")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsV2(int? pageNumber, int? pageSize)
+        public async Task<ActionResult<PagedResponse<Product>>> GetAllProductsV2([FromQuery][Required] int pageNumber, [FromQuery][Required] int pageSize)
         {
             _logger?.LogDebug($"Method '{nameof(GetAllProductsV2)}' called. PageNumber {pageNumber} / PageSize {pageSize}.");
-            if (pageNumber == null || pageSize == null) return (BadRequest("pageNumber or pageSize missing"));
-            if (pageNumber.Value < 1 || pageSize.Value < 1) return (BadRequest("pageNumber or pageSize less than 1"));
+            if (pageNumber < 1 || pageSize < 1) return (BadRequest("pageNumber or pageSize less than 1"));
             try
             {
-                List<Product> products = (await _productService.GetAllProductsPage(pageNumber.Value, pageSize.Value)).ToList();
+                List<Product> products = (await _productService.GetAllProductsPage(pageNumber, pageSize)).ToList();
                 var itemsCount = products.Count();
                 _logger?.LogInformation($"Method '{nameof(GetAllProductsV2)}' successfully done.");
-                return Ok(new PagedResponse<Product>(pageNumber.Value, pageSize.Value, itemsCount, products));
+                return Ok(new PagedResponse<Product>(pageNumber, pageSize, itemsCount, products));
             }
             catch (Exception ex)
             {

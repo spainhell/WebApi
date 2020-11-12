@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.DataLayerEF", "WebApi.DataLayerEF\WebApi.DataLayerEF.csproj", "{809FEEE1-F8B3-4D44-A3D6-CE7630D44DEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.DataLayerEF", "WebApi.DataLayerEF\WebApi.DataLayerEF.csproj", "{809FEEE1-F8B3-4D44-A3D6-CE7630D44DEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.DomainLayer", "WebApi.DomainLayer\WebApi.DomainLayer.csproj", "{9B4B6FC3-EED0-40DB-9916-58268F8F25D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.DomainLayer", "WebApi.DomainLayer\WebApi.DomainLayer.csproj", "{9B4B6FC3-EED0-40DB-9916-58268F8F25D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.RestApi", "WebApi.RestApi\WebApi.RestApi.csproj", "{3AB74F7A-6CAE-4137-A870-03BF37E2430A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.RestApi", "WebApi.RestApi\WebApi.RestApi.csproj", "{3AB74F7A-6CAE-4137-A870-03BF37E2430A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.BusinessLayer", "WebApi.BusinessLayer\WebApi.BusinessLayer.csproj", "{9D38F73F-F851-478B-85BE-45ABA21778DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.BusinessLayer", "WebApi.BusinessLayer\WebApi.BusinessLayer.csproj", "{9D38F73F-F851-478B-85BE-45ABA21778DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.UnitTests", "WebApi.UnitTests\WebApi.UnitTests.csproj", "{C4CBC1F2-B37C-46A9-85AD-8077BC8E75CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9D38F73F-F851-478B-85BE-45ABA21778DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D38F73F-F851-478B-85BE-45ABA21778DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D38F73F-F851-478B-85BE-45ABA21778DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4CBC1F2-B37C-46A9-85AD-8077BC8E75CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4CBC1F2-B37C-46A9-85AD-8077BC8E75CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4CBC1F2-B37C-46A9-85AD-8077BC8E75CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4CBC1F2-B37C-46A9-85AD-8077BC8E75CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
